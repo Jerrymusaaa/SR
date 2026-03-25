@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env
+dist/
+build/
+pnpm-lock.yaml
+node_modules/
+.next/
+.env
+dist/
+build/
+pnpm-lock.yaml
