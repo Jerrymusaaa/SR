@@ -5,9 +5,12 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { MarketsModule } from './modules/markets/markets.module';
 import { BetsModule } from './modules/bets/bets.module';
+import { WalletModule } from './modules/wallet/wallet.module';
 import { User } from './modules/users/entities/user.entity';
 import { Market } from './modules/markets/entities/market.entity';
 import { Bet } from './modules/bets/entities/bet.entity';
+import { Wallet } from './modules/wallet/entities/wallet.entity';
+import { Transaction } from './modules/transactions/entities/transaction.entity';
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 
@@ -26,7 +29,7 @@ import jwtConfig from './config/jwt.config';
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
-        entities: [User, Market, Bet],
+        entities: [User, Market, Bet, Wallet, Transaction],
         synchronize: true,
         logging: false,
       }),
@@ -36,6 +39,7 @@ import jwtConfig from './config/jwt.config';
     UsersModule,
     MarketsModule,
     BetsModule,
+    WalletModule,
   ],
 })
 export class AppModule {}
