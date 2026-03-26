@@ -1,12 +1,20 @@
+# Dependencies
 node_modules/
-.next/
-.env
+
+# Build outputs
 dist/
 build/
-pnpm-lock.yaml
-node_modules/
 .next/
+
+# Environment files
 .env
-dist/
-build/
-pnpm-lock.yaml
+.env.local
+.env*.local
+
+# Locks (keep pnpm-lock.yaml actually — remove this line if you want to track it)
+# pnpm-lock.yaml
+
+# Misc
+.DS_Store
+*.log
+.turbo/
