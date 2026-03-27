@@ -26,7 +26,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/landing" className="inline-flex items-center gap-2">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
@@ -44,7 +43,6 @@ export default function LoginPage() {
                 {error}
               </div>
             )}
-
             <div>
               <label className="label">Email</label>
               <input
@@ -56,7 +54,6 @@ export default function LoginPage() {
                 required
               />
             </div>
-
             <div>
               <label className="label">Password</label>
               <input
@@ -68,16 +65,10 @@ export default function LoginPage() {
                 required
               />
             </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn-primary w-full"
-            >
+            <button type="submit" disabled={isLoading} className="btn-primary w-full">
               {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
-
           <p className="text-center text-sm text-muted mt-6">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="text-primary font-medium hover:underline">

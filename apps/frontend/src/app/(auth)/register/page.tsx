@@ -51,66 +51,28 @@ export default function RegisterPage() {
                 {Array.isArray(error) ? error.join(', ') : error}
               </div>
             )}
-
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="label">First Name</label>
-                <input
-                  name="firstName"
-                  className="input"
-                  placeholder="John"
-                  value={form.firstName}
-                  onChange={handleChange}
-                />
+                <input name="firstName" className="input" placeholder="John" value={form.firstName} onChange={handleChange} />
               </div>
               <div>
                 <label className="label">Last Name</label>
-                <input
-                  name="lastName"
-                  className="input"
-                  placeholder="Doe"
-                  value={form.lastName}
-                  onChange={handleChange}
-                />
+                <input name="lastName" className="input" placeholder="Doe" value={form.lastName} onChange={handleChange} />
               </div>
             </div>
-
             <div>
               <label className="label">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="input"
-                placeholder="you@example.com"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
+              <input type="email" name="email" className="input" placeholder="you@example.com" value={form.email} onChange={handleChange} required />
             </div>
-
             <div>
               <label className="label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input"
-                placeholder="Min 8 characters"
-                value={form.password}
-                onChange={handleChange}
-                required
-                minLength={8}
-              />
+              <input type="password" name="password" className="input" placeholder="Min 8 characters" value={form.password} onChange={handleChange} required minLength={8} />
             </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn-primary w-full"
-            >
+            <button type="submit" disabled={isLoading} className="btn-primary w-full">
               {isLoading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
-
           <p className="text-center text-sm text-muted mt-6">
             Already have an account?{' '}
             <Link href="/login" className="text-primary font-medium hover:underline">
