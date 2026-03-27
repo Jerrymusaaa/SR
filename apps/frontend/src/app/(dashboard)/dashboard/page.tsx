@@ -41,7 +41,7 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold text-accent">
           Good morning, {user?.firstName ?? 'there'} 👋
         </h1>
-        <p className="text-muted mt-1">Here&apos;s what&apos;s happening on OKO today</p>
+        <p className="text-muted mt-1">Here&apos;s what&apos;s happening on SOKO today</p>
       </div>
 
       {loading ? (

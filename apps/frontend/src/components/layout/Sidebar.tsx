@@ -34,36 +34,38 @@ export function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-border flex flex-col z-10">
-      {/* Logo */}
       <div className="px-6 py-5 border-b border-border">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">O</span>
           </div>
-          <span className="font-bold text-xl text-accent">OKO</span>
+          <span className="font-bold text-xl text-accent">SOKO</span>
         </Link>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
-        {navItems.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150',
-              pathname.startsWith(href)
-                ? 'bg-primary text-white'
-                : 'text-muted hover:bg-background hover:text-accent',
-            )}
-          >
-            <Icon size={18} />
-            {label}
-          </Link>
-        ))}
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const isActive = href === '/dashboard'
+            ? pathname === '/dashboard'
+            : pathname.startsWith(href)
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150',
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-muted hover:bg-background hover:text-accent',
+              )}
+            >
+              <Icon size={18} />
+              {label}
+            </Link>
+          )
+        })}
       </nav>
 
-      {/* User */}
       <div className="px-3 py-4 border-t border-border">
         <div className="flex items-center gap-3 px-3 py-2 mb-1">
           <div className="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary font-semibold text-sm">
