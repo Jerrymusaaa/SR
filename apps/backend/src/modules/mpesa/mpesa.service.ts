@@ -32,9 +32,10 @@ export class MpesaService {
 
   private get baseUrl(): string {
     const env = this.configService.get<string>('mpesa.environment');
-    return env === 'production'
-      ? 'https://api.safaricom.co.ke'
-      : 'https://sandbox.safaricom.co.ke'\;
+    if (env === 'production') {
+      return 'https://api.safaricom.co.ke';
+    }
+    return 'https://sandbox.safaricom.co.ke';
   }
 
   private async getAccessToken(): Promise<string> {
@@ -118,7 +119,6 @@ export class MpesaService {
         throw new BadRequestException(ResponseDescription || 'STK push failed');
       }
 
-      // Save pending transaction
       const transaction = this.transactionRepository.create({
         userId,
         type: TransactionType.DEPOSIT,
@@ -129,12 +129,17 @@ export class MpesaService {
         reference,
         externalReference: CheckoutRequestID,
         description: dto.description,
-        metadata: { phoneNumber: dto.phoneNumber, checkoutRequestId: CheckoutRequestID },
+        metadata: {
+          phoneNumber: dto.phoneNumber,
+          checkoutRequestId: CheckoutRequestID,
+        },
       });
 
       await this.transactionRepository.save(transaction);
 
-      this.logger.log(`STK push initiated for user ${userId}: ${CheckoutRequestID}`);
+      this.logger.log(
+        `STK push initiated for user ${userId}: ${CheckoutRequestID}`,
+      );
 
       return {
         checkoutRequestId: CheckoutRequestID,
@@ -149,12 +154,7 @@ export class MpesaService {
 
   async handleCallback(payload: MpesaCallbackDto): Promise<void> {
     const { stkCallback } = payload.Body;
-    const {
-      CheckoutRequestID,
-      ResultCode,
-      ResultDesc,
-      CallbackMetadata,
-    } = stkCallback;
+    const { CheckoutRequestID, ResultCode, ResultDesc, CallbackMetadata } = stkCallback;
 
     this.logger.log(`M-Pesa callback received: ${CheckoutRequestID} - Code: ${ResultCode}`);
 
@@ -168,10 +168,8 @@ export class MpesaService {
     }
 
     if (ResultCode === 0) {
-      // Payment successful
       const items = CallbackMetadata?.Item ?? [];
-      const getMeta = (name: string) =>
-        items.find((i) => i.Name === name)?.Value;
+      const getMeta = (name: string) => items.find((i) => i.Name === name)?.Value;
 
       const mpesaReceiptNumber = getMeta('MpesaReceiptNumber') as string;
       const amount = getMeta('Amount') as number;
@@ -185,7 +183,6 @@ export class MpesaService {
 
       await this.transactionRepository.save(transaction);
 
-      // Credit wallet
       await this.walletService.getOrCreateWallet(transaction.userId);
       const wallet = await this.walletService.getBalance(transaction.userId);
       const updatedBalance = Number(wallet.kesBalance) + Number(amount ?? transaction.amount);
@@ -194,18 +191,14 @@ export class MpesaService {
         .getRepository('wallets')
         .update({ userId: transaction.userId }, { kesBalance: updatedBalance });
 
-      this.logger.log(
-        `Wallet credited for user ${transaction.userId}: KES ${amount ?? transaction.amount}`,
-      );
+      this.logger.log(`Wallet credited for user ${transaction.userId}: KES ${amount ?? transaction.amount}`);
     } else {
-      // Payment failed
       transaction.status = TransactionStatus.FAILED;
       transaction.metadata = {
         ...((transaction.metadata as object) ?? {}),
         failureReason: ResultDesc,
       };
       await this.transactionRepository.save(transaction);
-
       this.logger.warn(`M-Pesa payment failed for ${CheckoutRequestID}: ${ResultDesc}`);
     }
   }

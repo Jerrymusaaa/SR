@@ -7,6 +7,7 @@ import { MarketsModule } from './modules/markets/markets.module';
 import { BetsModule } from './modules/bets/bets.module';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { MpesaModule } from './modules/mpesa/mpesa.module';
+import { SolanaModule } from './modules/solana/solana.module';
 import { User } from './modules/users/entities/user.entity';
 import { Market } from './modules/markets/entities/market.entity';
 import { Bet } from './modules/bets/entities/bet.entity';
@@ -15,12 +16,13 @@ import { Transaction } from './modules/transactions/entities/transaction.entity'
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 import mpesaConfig from './config/mpesa.config';
+import solanaConfig from './config/solana.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, jwtConfig, mpesaConfig],
+      load: [databaseConfig, jwtConfig, mpesaConfig, solanaConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -43,6 +45,7 @@ import mpesaConfig from './config/mpesa.config';
     BetsModule,
     WalletModule,
     MpesaModule,
+    SolanaModule,
   ],
 })
 export class AppModule {}

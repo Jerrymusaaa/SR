@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
+import { SolanaWalletProvider } from '@/components/solana/WalletProvider'
 
 export const metadata: Metadata = {
   title: 'SOKO — Kenyan Prediction Markets',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SolanaWalletProvider>{children}</SolanaWalletProvider>
+      </body>
     </html>
   )
 }
