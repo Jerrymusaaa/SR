@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { TrendingUp, Shield, Zap, Globe } from 'lucide-react'
 
@@ -8,7 +10,7 @@ export default function LandingPage() {
       <nav className="border-b border-border px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">O</span>
+            <span className="text-white font-bold text-sm">S</span>
           </div>
           <span className="font-bold text-xl text-accent">SOKO</span>
         </div>
@@ -71,7 +73,7 @@ export default function LandingPage() {
               },
               {
                 icon: Globe,
-                title: '$OKO Token',
+                title: '$SOKO Token',
                 desc: 'Earn and use our native Solana token',
               },
             ].map(({ icon: Icon, title, desc }) => (
