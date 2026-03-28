@@ -1,7 +1,13 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  turbopack: {},
+  transpilePackages: [
+    '@solana/wallet-adapter-react-ui',
+    '@solana/wallet-adapter-react',
+    '@solana/wallet-adapter-base',
+    '@solana/wallet-adapter-wallets',
+  ],
+}
 
-export default nextConfig;
+export default nextConfig
