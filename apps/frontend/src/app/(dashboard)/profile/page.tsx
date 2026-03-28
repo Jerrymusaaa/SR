@@ -3,18 +3,12 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { useAuthStore } from '@/store/auth.store'
 import { formatDate } from '@/lib/utils'
-import { User, Shield, Bell } from 'lucide-react'
+import { User, Bell } from 'lucide-react'
 import { PhantomConnect } from '@/components/solana/PhantomConnect'
+import { KycVerification } from '@/components/kyc/KycVerification'
 
 export default function ProfilePage() {
   const { user } = useAuthStore()
-
-  const kycColors: Record<string, string> = {
-    none: 'bg-gray-100 text-muted',
-    pending: 'bg-yellow-50 text-yellow-600',
-    approved: 'bg-green-50 text-success',
-    rejected: 'bg-red-50 text-danger',
-  }
 
   return (
     <DashboardLayout>
@@ -64,29 +58,11 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Phantom Wallet / $SOKO */}
-        <PhantomConnect />
+        {/* KYC Verification */}
+        <KycVerification />
 
-        {/* KYC */}
-        <div className="card">
-          <div className="flex items-center gap-2 mb-4">
-            <Shield size={18} className="text-primary" />
-            <h2 className="font-semibold text-accent">Verification (KYC)</h2>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted mb-1">Current Status</p>
-              <span className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${kycColors[user?.kycStatus ?? 'none']}`}>
-                {user?.kycStatus ?? 'none'}
-              </span>
-            </div>
-            {user?.kycStatus === 'none' && (
-              <button className="btn-primary text-sm py-2 px-4">
-                Start Verification
-              </button>
-            )}
-          </div>
-        </div>
+        {/* Phantom Wallet */}
+        <PhantomConnect />
 
         {/* Security */}
         <div className="card">

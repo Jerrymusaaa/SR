@@ -4,9 +4,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
-  // Global validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -15,16 +16,13 @@ async function bootstrap() {
     }),
   );
 
-  // CORS
   app.enableCors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
   });
 
-  // API prefix
   app.setGlobalPrefix('api');
 
-  // Swagger docs
   const config = new DocumentBuilder()
     .setTitle('SOKO Platform API')
     .setDescription('Kenyan Prediction Market Platform')
